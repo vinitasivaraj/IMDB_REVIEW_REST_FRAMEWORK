@@ -9,7 +9,7 @@ from rest_framework import generics,mixins
 from rest_framework.permissions import IsAuthenticated
 from watchlist_app.api.permissions import AdminorReadonly,ReviewUserOrReadOnly
 from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
-
+from watchlist_app.pagination import Watchlistpagesize
 
 class ReviewCreate(generics.CreateAPIView):
     serializer_class=ReviewSerializer
@@ -90,6 +90,7 @@ class StreamPlatformListAV(APIView):
 
 class WatchListAV(APIView):
     permission_classes=[AdminorReadonly]
+    pagination_class=[Watchlistpagesize]
     def get(self,request):
         movie=Watchlist.objects.all()
         serializer=WatchListSerializer(movie,many=True)
